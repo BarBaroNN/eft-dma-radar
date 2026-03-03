@@ -1,6 +1,6 @@
 using eft_dma_radar.Common.Misc;
-using eft_dma_radar.Tarkov.MissionPlanner;
-using eft_dma_radar.Tarkov.MissionPlanner.Models;
+using eft_dma_radar.Tarkov.QuestPlanner;
+using eft_dma_radar.Tarkov.QuestPlanner.Models;
 using eft_dma_radar.UI.Misc;
 using SkiaSharp;
 using SkiaSharp.Views.WPF;
@@ -43,10 +43,10 @@ namespace eft_dma_radar.UI.SKWidgetControl
                 ClientRectangle.Left + _padding,
                 ClientRectangle.Top + lineSpacing * 0.8f + _padding);
 
-            var summary = MissionPlannerService.Current;
-            var state = MissionPlannerService.State;
+            var summary = QuestPlannerService.Current;
+            var state = QuestPlannerService.State;
 
-            if (summary == null || state == MissionConnectionState.Disconnected)
+            if (summary == null || state == QuestConnectionState.Disconnected)
             {
                 canvas.DrawText("No plan available", drawPt, _dimTextPaint);
             }
@@ -73,9 +73,9 @@ namespace eft_dma_radar.UI.SKWidgetControl
                 drawPt.Y += lineSpacing;
 
                 // Line 4: connection state
-                if (state == MissionConnectionState.Lobby)
+                if (state == QuestConnectionState.Lobby)
                     canvas.DrawText("[Lobby]", drawPt, _greenPaint);
-                else if (state == MissionConnectionState.InRaid)
+                else if (state == QuestConnectionState.InRaid)
                     canvas.DrawText("[In Raid]", drawPt, _yellowPaint);
             }
 

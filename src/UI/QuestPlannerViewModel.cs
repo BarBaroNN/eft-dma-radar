@@ -1,15 +1,15 @@
 using System.ComponentModel;
 using System.Windows.Threading;
-using eft_dma_radar.Tarkov.MissionPlanner;
-using eft_dma_radar.Tarkov.MissionPlanner.Models;
+using eft_dma_radar.Tarkov.QuestPlanner;
+using eft_dma_radar.Tarkov.QuestPlanner.Models;
 using eft_dma_radar.UI.Misc;
 
 namespace eft_dma_radar.UI;
 
 /// <summary>
 /// Reactive ViewModel for the Quest Planner panel.
-/// Provides data binding for mission summary and connection state.
-/// Uses a 1-second DispatcherTimer to poll MissionPlannerService.Current.
+/// Provides data binding for quest summary and connection state.
+/// Uses a 1-second DispatcherTimer to poll QuestPlannerService.Current.
 /// </summary>
 public sealed class QuestPlannerViewModel : INotifyPropertyChanged
 {
@@ -18,8 +18,8 @@ public sealed class QuestPlannerViewModel : INotifyPropertyChanged
     private readonly DispatcherTimer _refreshTimer;
 
     // --- Backing fields ---
-    private MissionSummary? _currentSummary;
-    private MissionConnectionState _connectionState = MissionConnectionState.Disconnected;
+    private QuestSummary? _currentSummary;
+    private QuestConnectionState _connectionState = QuestConnectionState.Disconnected;
     private DateTime? _lastReadTime;
     private bool _isStale;
 
@@ -37,13 +37,13 @@ public sealed class QuestPlannerViewModel : INotifyPropertyChanged
     public void Stop() => _refreshTimer.Stop();
 
     // --- Reactive properties ---
-    public MissionSummary? CurrentSummary
+    public QuestSummary? CurrentSummary
     {
         get => _currentSummary;
         private set { _currentSummary = value; OnPropertyChanged(nameof(CurrentSummary)); }
     }
 
-    public MissionConnectionState ConnectionState
+    public QuestConnectionState ConnectionState
     {
         get => _connectionState;
         private set { _connectionState = value; OnPropertyChanged(nameof(ConnectionState)); OnPropertyChanged(nameof(StatusText)); }
@@ -64,8 +64,8 @@ public sealed class QuestPlannerViewModel : INotifyPropertyChanged
     // --- Derived display properties ---
     public string StatusText => _connectionState switch
     {
-        MissionConnectionState.Lobby => "Lobby",
-        MissionConnectionState.InRaid => "In Raid",
+        QuestConnectionState.Lobby => "Lobby",
+        QuestConnectionState.InRaid => "In Raid",
         _ => "Disconnected"
     };
 
@@ -74,7 +74,7 @@ public sealed class QuestPlannerViewModel : INotifyPropertyChanged
         : "--:--:--";
 
     // --- Empty state ---
-    public bool ShowEmptyState => _currentSummary != null && _currentSummary.Maps.Count == 0 && _connectionState == MissionConnectionState.Lobby && !_isStale;
+    public bool ShowEmptyState => _currentSummary != null && _currentSummary.Maps.Count == 0 && _connectionState == QuestConnectionState.Lobby && !_isStale;
 
     public string EmptyStateMessage => _currentSummary?.TotalActiveQuests == 0
         ? "No active quests."
@@ -88,14 +88,14 @@ public sealed class QuestPlannerViewModel : INotifyPropertyChanged
     /// </summary>
     public bool KappaFilterEnabled
     {
-        get => ConfigManager.CurrentConfig.MissionPlanner.KappaFilter;
+        get => ConfigManager.CurrentConfig.QuestPlanner.KappaFilter;
         set
         {
-            if (ConfigManager.CurrentConfig.MissionPlanner.KappaFilter == value) return;
-            ConfigManager.CurrentConfig.MissionPlanner.KappaFilter = value;
+            if (ConfigManager.CurrentConfig.QuestPlanner.KappaFilter == value) return;
+            ConfigManager.CurrentConfig.QuestPlanner.KappaFilter = value;
             ConfigManager.CurrentConfig.Save();
             OnPropertyChanged(nameof(KappaFilterEnabled));
-            MissionPlannerService.ForceRecompute();
+            QuestPlannerService.ForceRecompute();
         }
     }
 
@@ -103,13 +103,13 @@ public sealed class QuestPlannerViewModel : INotifyPropertyChanged
     /// True when there are active quests with no-map objectives to display in the All Maps section.
     /// </summary>
     public bool ShowAllMapsSection =>
-        (_currentSummary?.AllMapsMissions?.Count ?? 0) > 0;
+        (_currentSummary?.AllMapsQuests?.Count ?? 0) > 0;
 
     /// <summary>
     /// Quests with no-map objectives for the All Maps section at the bottom of the panel.
     /// </summary>
-    public IReadOnlyList<MissionPlan> AllMapsMissions =>
-        _currentSummary?.AllMapsMissions ?? [];
+    public IReadOnlyList<QuestPlan> AllMapsQuests =>
+        _currentSummary?.AllMapsQuests ?? [];
 
     /// <summary>
     /// The top-scored (recommended) map, wrapped in a single-item list for the pinned sticky card.
@@ -191,9 +191,9 @@ public sealed class QuestPlannerViewModel : INotifyPropertyChanged
     private void OnTimerTick(object? sender, EventArgs e)
     {
         var previousState = _connectionState;
-        var state = MissionPlannerService.State;
-        var summary = MissionPlannerService.Current;
-        var isStale = MissionPlannerService.IsStale;
+        var state = QuestPlannerService.State;
+        var summary = QuestPlannerService.Current;
+        var isStale = QuestPlannerService.IsStale;
 
         ConnectionState = state;
         IsStale = isStale;
@@ -211,7 +211,7 @@ public sealed class QuestPlannerViewModel : INotifyPropertyChanged
             OnPropertyChanged(nameof(ShowEmptyState));
             OnPropertyChanged(nameof(EmptyStateMessage));
             OnPropertyChanged(nameof(ShowAllMapsSection));
-            OnPropertyChanged(nameof(AllMapsMissions));
+            OnPropertyChanged(nameof(AllMapsQuests));
             OnPropertyChanged(nameof(RecommendedMap));
             OnPropertyChanged(nameof(OtherMaps));
             OnPropertyChanged(nameof(ShowAvailableForStartBanner));

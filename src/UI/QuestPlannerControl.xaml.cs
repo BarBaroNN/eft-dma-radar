@@ -2,7 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.ComponentModel;
-using eft_dma_radar.Tarkov.MissionPlanner;
+using eft_dma_radar.Tarkov.QuestPlanner;
 using eft_dma_radar.UI.Misc;
 using UserControl = System.Windows.Controls.UserControl;
 using Point = System.Windows.Point;
@@ -72,7 +72,7 @@ public partial class QuestPlannerControl : UserControl
         var state = _vm.ConnectionState;
         var isStale = _vm.IsStale;
 
-        if (state == MissionConnectionState.Disconnected)
+        if (state == QuestConnectionState.Disconnected)
         {
             var hasLastPlan = _vm.CurrentSummary != null;
             StatusBannerText.Text = hasLastPlan
@@ -80,7 +80,7 @@ public partial class QuestPlannerControl : UserControl
                 : "Quest plan will appear when connected in lobby.";
             StatusBanner.Visibility = Visibility.Visible;
         }
-        else if (state == MissionConnectionState.Lobby && isStale)
+        else if (state == QuestConnectionState.Lobby && isStale)
         {
             StatusBannerText.Text = "Could not refresh mission data - showing last known plan";
             StatusBanner.Visibility = Visibility.Visible;

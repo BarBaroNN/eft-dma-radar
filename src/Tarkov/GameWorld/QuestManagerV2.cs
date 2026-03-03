@@ -35,7 +35,7 @@ namespace eft_dma_radar.Tarkov.GameWorld
     ///
     /// IMPORTANT: Distinction from QuestReader
     /// This class reads quest ZONES IN-RAID from LocalGameWorld -> Player -> QuestManager
-    /// for radar map display. It has nothing to do with QuestReader in MissionPlanner/.
+    /// for radar map display. It has nothing to do with QuestReader in QuestPlanner/.
     /// QuestReader reads quest STATUS from the player Profile (lobby + in-raid fallback)
     /// for session planning. These are separate memory paths serving separate purposes.
     /// </summary>

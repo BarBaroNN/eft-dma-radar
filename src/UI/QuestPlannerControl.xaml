@@ -179,11 +179,11 @@
                                         <!-- Missions Sub-Section -->
                                         <StackPanel Margin="12,6,8,0">
                                             <TextBlock Text="MISSIONS" FontSize="10" Opacity="0.5" Margin="0,0,0,4"/>
-                                            <ItemsControl ItemsSource="{Binding Missions}">
+                                            <ItemsControl ItemsSource="{Binding Quests}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Margin="0,0,0,8">
-                                                            <TextBlock Text="{Binding MissionName}" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,2"/>
+                                                            <TextBlock Text="{Binding QuestName}" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,2"/>
                                                             <ItemsControl ItemsSource="{Binding Objectives}" Margin="8,0,0,0">
                                                                 <ItemsControl.ItemTemplate>
                                                                     <DataTemplate>
@@ -415,11 +415,11 @@
                                             <!-- Missions Sub-Section -->
                                             <StackPanel Margin="12,6,8,0">
                                                 <TextBlock Text="MISSIONS" FontSize="10" Opacity="0.5" Margin="0,0,0,4"/>
-                                                <ItemsControl ItemsSource="{Binding Missions}">
+                                                <ItemsControl ItemsSource="{Binding Quests}">
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
                                                             <StackPanel Margin="0,0,0,8">
-                                                                <TextBlock Text="{Binding MissionName}" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,2"/>
+                                                                <TextBlock Text="{Binding QuestName}" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,2"/>
                                                                 <ItemsControl ItemsSource="{Binding Objectives}" Margin="8,0,0,0">
                                                                     <ItemsControl.ItemTemplate>
                                                                         <DataTemplate>
@@ -626,11 +626,11 @@
                                         <Rectangle Height="1" Fill="{DynamicResource BorderBrush}" Margin="0,6,0,0"/>
                                     </StackPanel>
                                     <StackPanel Margin="12,6,8,0">
-                                        <ItemsControl ItemsSource="{Binding AllMapsMissions}">
+                                        <ItemsControl ItemsSource="{Binding AllMapsQuests}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Margin="0,0,0,8">
-                                                        <TextBlock Text="{Binding MissionName}" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,2"/>
+                                                        <TextBlock Text="{Binding QuestName}" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,2"/>
                                                         <ItemsControl ItemsSource="{Binding Objectives}" Margin="8,0,0,0">
                                                             <ItemsControl.ItemTemplate>
                                                                 <DataTemplate>
