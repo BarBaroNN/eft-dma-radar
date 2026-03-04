@@ -7,7 +7,7 @@ namespace eft_dma_radar.Tarkov.QuestPlanner
     /// <remarks>
     /// Memory source: Profile.QuestsData (offset 0x98) -> UnityList&lt;QuestStatusData&gt;
     /// Only quests with EQuestStatus.Started (2) are included.
-    /// This is the ONLY type passed from the memory layer to Phase 2 QuestPlanBuilder --
+    /// This is the ONLY type passed from the memory layer to QuestPlanBuilder --
     /// no direct coupling to QuestManagerV2 types.
     /// </remarks>
     public sealed class QuestData

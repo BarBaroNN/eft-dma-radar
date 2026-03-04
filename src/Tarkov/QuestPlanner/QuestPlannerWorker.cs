@@ -50,7 +50,7 @@ internal static class QuestPlannerWorker
 
     /// <summary>
     /// The latest computed quest summary, or null when not in lobby.
-    /// Read by Phase 3 UI tab.
+    /// Read by the Quest Planner UI tab.
     /// </summary>
     public static QuestSummary? Current { get; private set; }
 

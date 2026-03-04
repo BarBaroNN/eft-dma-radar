@@ -118,7 +118,7 @@ public static class QuestPlanBuilder
     {
         foreach (var quest in quests)
         {
-            // Skip quests without task metadata (per RESEARCH Open Question 4)
+            // Skip quests without task metadata
             if (!taskData.TryGetValue(quest.Id, out var task))
                 continue;
 

@@ -57,8 +57,7 @@ namespace SDK
 
         public readonly partial struct TaskConditionCounter
         {
-            // fields at +0x10, _value at fields+0x30 = object+0x40 (DEC 1)
-            public const uint Value = 0x40; // Int32
+            public const uint Value = 0x40; // Int32 — _value field (DEC 1)
         }
 
     }
