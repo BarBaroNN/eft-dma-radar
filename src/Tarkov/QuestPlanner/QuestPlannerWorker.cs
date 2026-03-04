@@ -274,7 +274,7 @@ internal static class QuestPlannerWorker
         if (current.Count != previous.Count) return true;
 
         // Build lookup from previous state
-        var prevById = previous.ToDictionary(q => q.Id, q => q.CompletedConditions, StringComparer.OrdinalIgnoreCase);
+        var prevById = previous.ToDictionary(q => q.Id, q => q.CompletedConditions, StringComparer.Ordinal);
 
         foreach (var quest in current)
         {

@@ -171,7 +171,7 @@ public static class QuestPlanBuilder
     {
         var scores = new Dictionary<string, MapScore>(StringComparer.OrdinalIgnoreCase);
         // Track per-quest map distribution: questId -> set of distinct normalized map IDs
-        var questMapDistribution = new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
+        var questMapDistribution = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
 
         foreach (var (task, obj) in completableObjectives)
         {
@@ -261,11 +261,11 @@ public static class QuestPlanBuilder
     {
         var activeQuestIds = new HashSet<string>(
             quests.Select(q => q.Id),
-            StringComparer.OrdinalIgnoreCase);
+            StringComparer.Ordinal);
 
         foreach (var score in scores.Values)
         {
-            var unlocked = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var unlocked = new HashSet<string>(StringComparer.Ordinal);
 
             foreach (var task in taskData.Values)
             {
@@ -319,7 +319,7 @@ public static class QuestPlanBuilder
         // Build set of active quest IDs for O(1) lookup
         var activeQuestIds = new HashSet<string>(
             quests.Select(q => q.Id),
-            StringComparer.OrdinalIgnoreCase);
+            StringComparer.Ordinal);
 
         // Build map ID set for quick lookup
         var rankedMapIds = new HashSet<string>(
@@ -434,11 +434,11 @@ public static class QuestPlanBuilder
         IReadOnlyList<QuestData> quests)
     {
         // Build lookup for completed conditions and counters by quest ID
-        var completedByQuestId = quests.ToDictionary(q => q.Id, q => q.CompletedConditions, StringComparer.OrdinalIgnoreCase);
-        var countersByQuestId = quests.ToDictionary(q => q.Id, q => q.ConditionCounters, StringComparer.OrdinalIgnoreCase);
+        var completedByQuestId = quests.ToDictionary(q => q.Id, q => q.CompletedConditions, StringComparer.Ordinal);
+        var countersByQuestId = quests.ToDictionary(q => q.Id, q => q.ConditionCounters, StringComparer.Ordinal);
 
         // Build task reference dictionary for accessing ALL objectives (not just map-filtered)
-        var taskRefById = new Dictionary<string, TaskElement>(StringComparer.OrdinalIgnoreCase);
+        var taskRefById = new Dictionary<string, TaskElement>(StringComparer.Ordinal);
         foreach (var (task, obj) in completableObjectives)
         {
             if (!taskRefById.ContainsKey(task.Id))
@@ -446,7 +446,7 @@ public static class QuestPlanBuilder
         }
 
         // Group objectives by task for this map
-        var objectivesByTask = new Dictionary<string, List<TaskElement.ObjectiveElement>>(StringComparer.OrdinalIgnoreCase);
+        var objectivesByTask = new Dictionary<string, List<TaskElement.ObjectiveElement>>(StringComparer.Ordinal);
 
         foreach (var (task, obj) in completableObjectives)
         {
@@ -467,7 +467,7 @@ public static class QuestPlanBuilder
         var result = new List<QuestPlan>();
 
         // Need task names from completableObjectives
-        var taskNames = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        var taskNames = new Dictionary<string, string>(StringComparer.Ordinal);
         foreach (var (task, obj) in completableObjectives)
         {
             if (!taskNames.ContainsKey(task.Id))
@@ -484,7 +484,7 @@ public static class QuestPlanBuilder
             var allObjectives = taskRef?.Objectives ?? new List<TaskElement.ObjectiveElement>();
             var findLookup = allObjectives
                 .Where(o => o.Type == "findQuestItem" && o.QuestItem != null)
-                .ToDictionary(o => o.QuestItem!.Id, o => o.Id, StringComparer.OrdinalIgnoreCase);
+                .ToDictionary(o => o.QuestItem!.Id, o => o.Id, StringComparer.Ordinal);
 
             var completedSet = completedByQuestId.GetValueOrDefault(taskId) ?? new HashSet<string>();
             var questCounters = countersByQuestId.GetValueOrDefault(taskId);
@@ -648,7 +648,7 @@ public static class QuestPlanBuilder
         FrozenDictionary<string, TaskElement> taskData)
     {
         var unlocked = new List<UnlockedQuest>();
-        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var seen = new HashSet<string>(StringComparer.Ordinal);
 
         if (completableQuestIds.Count == 0)
             return unlocked;
@@ -698,18 +698,18 @@ public static class QuestPlanBuilder
         List<(TaskElement Task, TaskElement.ObjectiveElement Objective)> completableObjectives,
         IReadOnlyList<QuestData> quests)
     {
-        var completedByQuestId = quests.ToDictionary(q => q.Id, q => q.CompletedConditions, StringComparer.OrdinalIgnoreCase);
-        var countersByQuestId = quests.ToDictionary(q => q.Id, q => q.ConditionCounters, StringComparer.OrdinalIgnoreCase);
+        var completedByQuestId = quests.ToDictionary(q => q.Id, q => q.CompletedConditions, StringComparer.Ordinal);
+        var countersByQuestId = quests.ToDictionary(q => q.Id, q => q.ConditionCounters, StringComparer.Ordinal);
 
         // Build task reference dictionary for accessing ALL objectives
-        var taskRefById = new Dictionary<string, TaskElement>(StringComparer.OrdinalIgnoreCase);
+        var taskRefById = new Dictionary<string, TaskElement>(StringComparer.Ordinal);
         foreach (var (task, obj) in completableObjectives)
         {
             if (!taskRefById.ContainsKey(task.Id))
                 taskRefById[task.Id] = task;
         }
 
-        var objectivesByTask = new Dictionary<string, (string Name, List<TaskElement.ObjectiveElement> Objectives)>(StringComparer.OrdinalIgnoreCase);
+        var objectivesByTask = new Dictionary<string, (string Name, List<TaskElement.ObjectiveElement> Objectives)>(StringComparer.Ordinal);
 
         foreach (var (task, obj) in completableObjectives)
         {
@@ -735,17 +735,17 @@ public static class QuestPlanBuilder
             var allObjs = taskRef?.Objectives ?? new List<TaskElement.ObjectiveElement>();
             var findLookup = allObjs
                 .Where(o => o.Type == "findQuestItem" && o.QuestItem != null)
-                .ToDictionary(o => o.QuestItem!.Id, o => o.Id, StringComparer.OrdinalIgnoreCase);
+                .ToDictionary(o => o.QuestItem!.Id, o => o.Id, StringComparer.Ordinal);
 
             // Build FIR pair IDs to exclude from All Maps objective list
             // (FIR pairs go to the FirItems category instead)
-            var firPairObjectiveIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var firPairObjectiveIds = new HashSet<string>(StringComparer.Ordinal);
             var firFindObjs = allObjs.Where(o => o.Type == "findItem" && o.FoundInRaid && o.Item != null).ToList();
             var firGiveObjs = allObjs.Where(o => o.Type == "giveItem" && o.Item != null).ToList();
             foreach (var findObj in firFindObjs)
             {
                 var matchingGive = firGiveObjs.FirstOrDefault(g =>
-                    string.Equals(g.Item!.Id, findObj.Item!.Id, StringComparison.OrdinalIgnoreCase));
+                    string.Equals(g.Item!.Id, findObj.Item!.Id, StringComparison.Ordinal));
                 if (matchingGive != null)
                 {
                     firPairObjectiveIds.Add(findObj.Id);
@@ -806,7 +806,7 @@ public static class QuestPlanBuilder
         FrozenDictionary<string, TaskElement> taskData)
     {
         var result = new List<FirItemInfo>();
-        var countersByQuestId = quests.ToDictionary(q => q.Id, q => q.ConditionCounters, StringComparer.OrdinalIgnoreCase);
+        var countersByQuestId = quests.ToDictionary(q => q.Id, q => q.ConditionCounters, StringComparer.Ordinal);
 
         foreach (var quest in quests)
         {
@@ -826,7 +826,7 @@ public static class QuestPlanBuilder
             {
                 // Check for a matching giveItem (same Item.Id)
                 var matchingGive = giveObjs.FirstOrDefault(g =>
-                    string.Equals(g.Item!.Id, findObj.Item!.Id, StringComparison.OrdinalIgnoreCase));
+                    string.Equals(g.Item!.Id, findObj.Item!.Id, StringComparison.Ordinal));
                 if (matchingGive == null) continue;
 
                 // Skip if giveItem is already completed (hand-over done)
