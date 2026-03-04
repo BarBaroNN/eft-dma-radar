@@ -1754,7 +1754,7 @@ namespace eft_dma_radar
             if (inRaid)
             {
                 // Entering raid - remember if panel was open, then hide it
-                if (_panels.TryGetValue("QuestPlanner", out var panelInfo))
+                if (_panels != null && _panels.TryGetValue("QuestPlanner", out var panelInfo))
                 {
                     _wasQuestPlannerOpenBeforeRaid = panelInfo.Panel.Visibility == Visibility.Visible;
                     if (_wasQuestPlannerOpenBeforeRaid)
