@@ -125,8 +125,6 @@ namespace eft_dma_radar
         private QuestInfoWidget _questInfo;
         public QuestInfoWidget QuestInfo { get => _questInfo; private set => _questInfo = value; }
 
-        private QuestPlannerWidget _questPlanner;
-        public QuestPlannerWidget QuestPlanner { get => _questPlanner; private set => _questPlanner = value; }
 
         /// <summary>
         /// Determines if MainWindow is ready or not
@@ -673,8 +671,7 @@ namespace eft_dma_radar
                     if (Config.ShowQuestInfoWidget)
                         _questInfo?.Draw(canvas);
 
-                    if (Config.ShowQuestPlannerWidget)
-                        _questPlanner?.Draw(canvas);
+
                 }
                 else
                 {
@@ -1177,9 +1174,7 @@ namespace eft_dma_radar
             _debugInfo = new DebugInfoWidget(skCanvas, Config.Widgets.DebugInfoLocation, Config.Widgets.DebugInfoMinimized, UIScale);
             _lootInfo = new LootInfoWidget(skCanvas, Config.Widgets.LootInfoLocation, Config.Widgets.LootInfoMinimized, UIScale);
             _questInfo = new QuestInfoWidget(skCanvas, Config.Widgets.QuestInfoLocation, Config.Widgets.QuestInfoMinimized, UIScale);
-            if (Config.Widgets.QuestPlannerWidgetLocation == default)
-                Config.Widgets.QuestPlannerWidgetLocation = new SKRect(left, top + 60, left + 280, top + 60 + 120);
-            _questPlanner = new QuestPlannerWidget(skCanvas, Config.Widgets.QuestPlannerWidgetLocation, Config.Widgets.QuestPlannerWidgetMinimized, UIScale);
+
         }
 
         public void UpdateRenderTimerInterval(int targetFPS)
@@ -1849,8 +1844,7 @@ namespace eft_dma_radar
                 Config.Widgets.LootInfoMinimized = _lootInfo.Minimized;
                 Config.Widgets.QuestInfoLocation = _questInfo.ClientRect;
                 Config.Widgets.QuestInfoMinimized = _questInfo.Minimized;
-                Config.Widgets.QuestPlannerWidgetLocation = _questPlanner.ClientRect;
-                Config.Widgets.QuestPlannerWidgetMinimized = _questPlanner.Minimized;
+
                 Config.Zoom = _zoom;
 
                 if (ESPForm.Window != null)

@@ -469,11 +469,6 @@ namespace eft_dma_radar.UI.Misc
         [JsonPropertyName("showQuestInfoWidget")]
         public bool ShowQuestInfoWidget { get; set; } = false;
 
-        /// <summary>
-        /// Shows Quest Planner Widget (compact quest summary overlay).
-        /// </summary>
-        [JsonPropertyName("showQuestPlannerWidget")]
-        public bool ShowQuestPlannerWidget { get; set; } = false;
 
         /// <summary>
         /// Enables ESP Widget window in Main Window.
@@ -2734,26 +2729,7 @@ namespace eft_dma_radar.UI.Misc
 
         #endregion
 
-        #region Quest Planner Widget
 
-        [JsonInclude]
-        [JsonPropertyName("questPlannerWidgetLocation")]
-        public RectFSer _qPlannerLoc { private get; set; }
-
-        [JsonPropertyName("questPlannerWidgetMinimized")]
-        public bool QuestPlannerWidgetMinimized { get; set; } = false;
-
-        /// <summary>
-        /// Quest Planner Widget location on radar canvas.
-        /// </summary>
-        [JsonIgnore]
-        public SKRect QuestPlannerWidgetLocation
-        {
-            get => new(_qPlannerLoc.Left, _qPlannerLoc.Top, _qPlannerLoc.Right, _qPlannerLoc.Bottom);
-            set => _qPlannerLoc = new RectFSer(value.Left, value.Top, value.Right, value.Bottom);
-        }
-
-        #endregion
     }
 
     public sealed class ESPWidgetsConfig

@@ -848,7 +848,7 @@ namespace eft_dma_radar.UI.Pages
                 ["Player Info Widget"] = Config.ShowInfoTab,
                 ["Loot Info Widget"] = Config.ShowLootInfoWidget,
                 ["Quest Info Widget"] = Config.ShowQuestInfoWidget,
-                ["Quest Planner Widget"] = Config.ShowQuestPlannerWidget,
+
                 ["HotKey Info Widget"] = Config.ESP.ShowHotkeyInfoWidget
             };
 
@@ -1934,9 +1934,7 @@ namespace eft_dma_radar.UI.Pages
                     case "Quest Info Widget":
                         Config.ShowQuestInfoWidget = isSelected;
                         break;
-                    case "Quest Planner Widget":
-                        Config.ShowQuestPlannerWidget = isSelected;
-                        break;
+
                     case "HotKey Info Widget":
                         Config.ESP.ShowHotkeyInfoWidget = isSelected;
                         break;
@@ -2939,10 +2937,7 @@ namespace eft_dma_radar.UI.Pages
                     Config.ShowQuestInfoWidget = isActive;
                     UpdateSpecificWidgetOption("Quest Info Widget", isActive);
                     break;
-                case nameof(HotkeyConfig.QuestPlannerWidget):
-                    Config.ShowQuestPlannerWidget = isActive;
-                    UpdateSpecificWidgetOption("Quest Planner Widget", isActive);
-                    break;
+
                 //case nameof(HotkeyConfig.ConnectGroups):
                 //    Config.ConnectGroups = isActive;
                 //    UpdateSpecificGeneralOption("Connect Groups", isActive);
